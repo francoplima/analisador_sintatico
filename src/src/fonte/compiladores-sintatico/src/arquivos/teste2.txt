@@ -1,0 +1,4 @@
+program asdfasdf 
+    error_declare
+        integer x, y
+    begin end

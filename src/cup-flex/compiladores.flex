@@ -1,42 +1,52 @@
-%%
-%standalone
+package principal;
 
-%class Teste
-%unicode
+%%
+
 %line
 %column
+%type Token
+%cup
 
 
 %{
-private Map<String, List<String>> simbolos = new HashMap<String, List<String>>();
+  TabelaSimbolo TS = new TabelaSimbolo();
 
-private void armazenar(String lexema, String token) {
-    // Se eu não possuo uma lista deste tipo de lexema
-    if(simbolos.get(lexema) == null) {
-	// Então eu crio a lista vazia
-	simbolos.put(lexema, new ArrayList<String>());
-    }
-    // Então eu adiciono o símbolo a lista
-    simbolos.get(lexema).add(token);
-}
+  public final int yylenght() {
+    return yytext().length();
+  }
+
+  public final int yyline() {
+    return yyline;
+  }
+
+  public final int yycolumn() {
+    return yycolumn;
+  }
+
+  public final int yychar() {
+    return yychar;
+  }
+
+  public boolean isZzAtEOF() {
+    return zzAtEOF;
+  }
 
 %}
+NONNEWLINE_WHITE_SPACE_CHAR=[\ \t\b]
+NEWLINE=\r|\n|\r\n
 
-LINETERMINATOR   = \r|\n|\t|\r\r
-WHITESPACE       = {LINETERMINATOR}* | [ \t\f]*
 CHARACTERE       = {ASCII}
 DIGIT            = [0-9]
 NUMBER           = {DIGIT}+
-LETTER           = [A-Z | a-z]
-VARIABLE         = {LETTER} ({LETTER} | {DIGIT})*
-IDENTIFIER       = {LETTER} ({LETTER} | {DIGIT})*
+LETTER           = [A-Z]|[a-z]
+IDENTIFIER       = {LETTER}({LETTER}|{DIGIT})*
 LITERAL          = {CHARACTERE}+
 CONSTANT         = {DIGIT} | {DIGIT}*
 RELOP            = [= | > | >= | < | <= | <>]
 ADDOP            = [+ | ]
 MULOP            = [* | /]
 FACTOR           = {VARIABLE} | {CONSTANT} | ({EXPRESSION})
-TERM2 			 = {TERM}
+TERM2 		 = {TERM}
 TERM             = {FACTOR} | {TERM2} {MULOP} {FACTOR}
 SIMPLEEXPR       = {TERM} | {SIMPLEEXPR} {ADDOP} {TERM}
 EXPRESSION       = {SIMPLEEXPR} | {SIMPLEEXPR} {RELOP} {SIMPLEEXPR}
@@ -61,21 +71,65 @@ PROGRAM          = {PROGRAM} {IDENTIFIER} {BODY}
 
 %%
 
-"if"					{ armazenar("reserved", yytext());  }
-"else"					{ armazenar("reserved", yytext());  }
-"end"					{ armazenar("reserved", yytext());  }
-"begin"					{ armazenar("reserved", yytext());  }
-"do"					{ armazenar("reserved", yytext());  }
-"while"					{ armazenar("reserved", yytext());  }
-"integer"				{ armazenar("type", yytext()); }
-","            			{ System.out.println("Separator ','"); }
-{NUMBER}                { armazenar("number", yytext()); }
-{VARIABLE}              { armazenar("variable", yytext()); }
+<YYINITIAL> {
+        "program" {
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+            String id = yytext().toString();
+            return new Token(sym.PRG, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+        }
+        "declare" {
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+            String id = yytext().toString();
+            return new Token(sym.DCL, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+        }
+        "begin" {
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+            String id = yytext().toString();
+            return new Token(sym.BGN, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+        }
+        "end" {
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+            String id = yytext().toString();
+            return new Token(sym.END, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+        }
+        ";" {
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+            String id = yytext().toString();
+            return new Token(sym.P_VIRG, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+        }
+        "," {
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+            String id = yytext().toString();
+            return new Token(sym.VIRG, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+        }
+        "integer" {
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+            String id = yytext().toString();
+            return new Token(sym.INTEGER, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+        }
+	{IDENTIFIER} {
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+            String id = yytext().toString();
+            Token t;
+            if (!TS.getTabelaSimbolos().containsKey(id)) {  			
+		t = new Token(sym.IDENTIFIER, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+		TS.getTabelaSimbolos().put(id, t);
+                return t;
+            }else{
+                t = TS.getTabelaSimbolos().get(id);
+                return (new Token(t.getTag(), id, yyline(), yycolumn(), yychar(), yychar+yylenght()));
+            }
+        }
+}
 
+<<EOF>> {
+	System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+	return (new Token(sym.EOF,yytext(),yyline(),yycolumn(),yychar(),yychar+1)); }
 
+{NONNEWLINE_WHITE_SPACE_CHAR}+ { }
 
+{NEWLINE} { }
 
-. { throw new RuntimeException("Caractere inválido '" + yytext() + "' na linha " + yyline + " e coluna " + yycolumn); }
-
-
-
+. {
+	System.out.println("Illegal character: <" + yytext().toString() + ">");
+}

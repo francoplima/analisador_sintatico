@@ -1,0 +1,13 @@
+package as_exemplo;
+
+terminal PRG, DCL, BGN, END, P_VIRG, VIRG, INTEGER; 
+terminal String IDENTIFIER;
+
+nonterminal program, body, decl_list, decl, ident_list, tipo; 
+
+program ::= PRG IDENTIFIER body;
+body ::= DCL decl_list BGN END;
+decl_list ::= decl | decl P_VIRG decl_list;
+decl ::= tipo ident_list;
+ident_list ::= IDENTIFIER | IDENTIFIER VIRG ident_list;
+tipo ::= INTEGER;

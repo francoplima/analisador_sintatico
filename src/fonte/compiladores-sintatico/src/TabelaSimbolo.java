@@ -1,5 +1,6 @@
 
 import java.util.Hashtable;
+import principal.sym;
 
 public class TabelaSimbolo {
     private Hashtable<String, Token> tabelaSimbolos;

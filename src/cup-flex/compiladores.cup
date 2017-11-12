@@ -1,10 +1,14 @@
-FACTOR           = {VARIABLE} | {CONSTANT} | ({EXPRESSION})
-TERM2 		 = {TERM}
-TERM             = {FACTOR} | {TERM} {MULOP} {FACTOR}
-SIMPLEEXPR       = {TERM} | {SIMPLEEXPR} {ADDOP} {TERM}
-EXPRESSION       = {SIMPLEEXPR} | {SIMPLEEXPR} {RELOP} {SIMPLEEXPR}
-WRITABLE         = {SIMPLEEXPR} | {LITERAL}
+FACTOR           = {VARIABLE} | {CONSTANT} | ({EXPRESSION}) 		-- feito
+TERM             = {FACTOR} | {TERM} {MULOP} {FACTOR}				-- feito
+SIMPLEEXPR       = {TERM} | {SIMPLEEXPR} {ADDOP} {TERM}				-- feito
+EXPRESSION       = {SIMPLEEXPR} | {SIMPLEEXPR} {RELOP} {SIMPLEEXPR} -- feito
+TYPE             = integer 											-- feito
+DECL             = {TYPE} {IDENTLIST} 								-- feito
+DECLLIST         = {DECL}|{DECL}; 									-- feito
+PROGRAM          = {PROGRAM} {IDENTIFIER} {BODY} 					-- feito
 
+
+WRITABLE         = {SIMPLEEXPR} | {LITERAL}
 READSTMT         = READ ({IDENTIFIER})
 WRITESTMT        = WRITE ({WRITABLE})
 CONDITION        = {EXPRESSION}
@@ -14,9 +18,24 @@ STMT             = {ASSIGNSTMT} | {IFSTMT} | {WHILESTMT} | {READSTMT} | {WRITEST
 ASSIGNSTMT       = {VARIABLE} := {SIMPLE_EXPR}
 IFSTMT           = if {CONDITION} then {STMTLIST} end | if {CONDITION} then {STMTLIST} else {STMTLIST} end
 STMTLIST         = ({STMT} | {STMT};)*
-TYPE             = integer
 IDENTLIST        = ({IDENTIFIER} | {IDENTIFIER},)*
-DECL             = {TYPE} {IDENTLIST}
-DECLLIST         = {DECL}|{DECL};
 BODY        	 = {DECLARE} {DECLLIST} begin {STMTLIST} end | begin {STMTLIST} end
-PROGRAM          = {PROGRAM} {IDENTIFIER} {BODY}
+
+package principal;
+
+terminal PRG, DCL, BGN, END, P_VIRG, VIRG, INTEGER, A_PAREM, F_PAREM, RELOP, ADDOP;
+terminal String IDENTIFIER;
+
+nonterminal program, body, decl_list, decl, ident_list, tipo; 
+
+program    ::= PRG IDENTIFIER body;
+body 	   ::= DCL decl_list BGN END;
+decl_list  ::= decl | decl P_VIRG decl_list;
+decl 	   ::= tipo ident_list;
+ident_list ::= IDENTIFIER | IDENTIFIER VIRG ident_list;
+tipo	   ::= INTEGER;
+term 	   ::= FACTOR | TERM MULOP FACTOR;
+factor 	   ::= variable | constant | A_PAREM expression F_PAREM;
+expression ::= simpleexpr | simpleexpr RELOP simpleexpr
+simpleexpr ::= term | simpleexpr ADDOP term
+

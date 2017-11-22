@@ -44,6 +44,7 @@ LITERAL          = ({DIGIT}|{LETTER})+
 RELOP            = "=" | ">" | ">=" | "<" | "<=" | "<>"
 ADDOP            = "+" | "-"
 MULOP            = "*" | "/"
+ATR				 = ":="			
 
 
 %%

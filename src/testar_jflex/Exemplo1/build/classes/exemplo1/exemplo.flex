@@ -89,6 +89,7 @@ MULOP            = "*" | "/"
 
 <<EOF>> {
 	System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+        return;
 }
 
 {NONNEWLINE_WHITE_SPACE_CHAR}+ { }

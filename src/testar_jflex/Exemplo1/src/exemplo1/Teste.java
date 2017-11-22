@@ -611,6 +611,7 @@ class Teste {
         zzAtEOF = true;
               {
                 System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+                continue;
               }
       }
       else {
@@ -648,7 +649,7 @@ class Teste {
    *               the scanner on.
    */
   public static void main(String argv[]) {
-    argv = new String[] {"F:\\Users\\Guilherme\\Documents\\analisador_lexico\\docs\\arquivos_teste\\teste_6.txt"};
+    argv = new String[]{"F:\\Users\\Guilherme\\Documents\\analisador_lexico\\docs\\arquivos_teste\\teste_1.txt"};
     if (argv.length == 0) {
       System.out.println("Usage : java Teste [ --encoding <name> ] <inputfile(s)>");
     }

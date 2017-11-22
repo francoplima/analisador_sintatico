@@ -85,6 +85,54 @@ ATR				 = ":="
         String id = yytext().toString();
         return new Token(sym.INTEGER, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
     }
+	"if" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+        String id = yytext().toString();
+        return new Token(sym.IF, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+	}
+	"else" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+        String id = yytext().toString();
+        return new Token(sym.ELSE, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+	}
+	"then" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+        String id = yytext().toString();
+        return new Token(sym.THEN, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+	}
+	"while" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+        String id = yytext().toString();
+        return new Token(sym.WHILE, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+	}
+	"do" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+        String id = yytext().toString();
+        return new Token(sym.DO, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+	}
+	"read" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+        String id = yytext().toString();
+        return new Token(sym.READ, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+	}
+	"write" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+        String id = yytext().toString();
+        return new Token(sym.WRITE, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+	}
+	{ATR} {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+        String id = yytext().toString();
+        Token t;
+        if (!TS.getTabelaSimbolos().containsKey(id)) {  			
+			t = new Token(sym.ATR, id, yyline(), yycolumn(), yychar(), yychar+yylenght());
+			TS.getTabelaSimbolos().put(id, t);
+			return t;
+		} else {
+            t = TS.getTabelaSimbolos().get(id);
+            return (new Token(t.getTag(), id, yyline(), yycolumn(), yychar(), yychar+yylenght()));
+        }
+	}
 	{IDENTIFIER} {
         System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
         String id = yytext().toString();

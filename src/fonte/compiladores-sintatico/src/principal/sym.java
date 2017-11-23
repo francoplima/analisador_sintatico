@@ -19,5 +19,6 @@ public class sym {
   public static final int PRG = 2;
   public static final int VIRG = 7;
   public static final int END = 5;
+    static int NUMBER;
 }
 

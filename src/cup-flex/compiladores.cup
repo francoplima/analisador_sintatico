@@ -1,32 +1,13 @@
-FACTOR           = {VARIABLE} | {CONSTANT} | ({EXPRESSION}) 		-- feito
-TERM             = {FACTOR} | {TERM} {MULOP} {FACTOR}				-- feito
-SIMPLEEXPR       = {TERM} | {SIMPLEEXPR} {ADDOP} {TERM}				-- feito
-EXPRESSION       = {SIMPLEEXPR} | {SIMPLEEXPR} {RELOP} {SIMPLEEXPR} -- feito
-TYPE             = integer 											-- feito
-DECL             = {TYPE} {IDENTLIST} 								-- feito
-DECLLIST         = {DECL}|{DECL}; 									-- feito
-PROGRAM          = {PROGRAM} {IDENTIFIER} {BODY} 					-- feito
 
-
-WRITABLE         = {SIMPLEEXPR} | {LITERAL}
-READSTMT         = READ ({IDENTIFIER})
-WRITESTMT        = WRITE ({WRITABLE})
-CONDITION        = {EXPRESSION}
-WHILESTMT        = do {STMTLIST} {STMTSUFFIX}
-STMTSUFFIX       = while {CONDITION} 
-STMT             = {ASSIGNSTMT} | {IFSTMT} | {WHILESTMT} | {READSTMT} | {WRITESTMT}
-ASSIGNSTMT       = {VARIABLE} := {SIMPLE_EXPR}
-IFSTMT           = if {CONDITION} then {STMTLIST} end | if {CONDITION} then {STMTLIST} else {STMTLIST} end
-STMTLIST         = ({STMT} | {STMT};)*
-IDENTLIST        = ({IDENTIFIER} | {IDENTIFIER},)*
-BODY        	 = {DECLARE} {DECLLIST} begin {STMTLIST} end | begin {STMTLIST} end
 
 package principal;
 
-terminal PRG, DCL, BGN, END, P_VIRG, VIRG, INTEGER, A_PAREM, F_PAREM, RELOP, ADDOP;
+terminal PRG, DCL, BGN, END, P_VIRG, VIRG, INTEGER, A_PAREM, F_PAREM, RELOP, 
+ADDOP, LITERAL, MULOP, DO*, WHILE*, READ*, WRITE*, IF* ,THEN*,ELSE*,VARIABLE* ,ATR*;
 terminal String IDENTIFIER;
 
-nonterminal program, body, decl_list, decl, ident_list, tipo; 
+nonterminal program, body, decl_list, decl, ident_list, tipo ,term ,factor, expression, 
+simpleexpr, ; 
 
 program    ::= PRG IDENTIFIER body;
 body 	   ::= DCL decl_list BGN END;
@@ -34,8 +15,23 @@ decl_list  ::= decl | decl P_VIRG decl_list;
 decl 	   ::= tipo ident_list;
 ident_list ::= IDENTIFIER | IDENTIFIER VIRG ident_list;
 tipo	   ::= INTEGER;
-term 	   ::= FACTOR | TERM MULOP FACTOR;
+term 	   ::= factor | term MULOP factor;
 factor 	   ::= variable | constant | A_PAREM expression F_PAREM;
 expression ::= simpleexpr | simpleexpr RELOP simpleexpr
 simpleexpr ::= term | simpleexpr ADDOP term
+writable   ::= simpleexpr | LITERAL
+condition  ::= expression
+stmtsuffix ::= WHILE condition
+assignstmt ::= VARIABLE ATR simpleexpr
+whilestmt  ::= DO stmtlist stmtsuffix
+readstmt   ::= READ A_PAREM IDENTIFIER F_PAREM
+writestmt  ::= WRITE A_PAREM writable F_PAREM
+ifstmt     ::= IF condition THEN stmtlist END | IF condition THEN stmtlist ELSE stmtlist END
+stmt       ::= assignstmt | ifstmt | whilestmt | readstmt | writestmt
+stmtlist   ::= stmt | stmt P_VIRG stmtlist
+body       ::= DCL decl_list BGN stmtlist END | BGN stmtlist END
+identlist  ::= IDENTIFIER | IDENTIFIER VIRG identlist
 
+
+
+*=ESTÁ FALTANDO IMPLEMENTAÇÃO

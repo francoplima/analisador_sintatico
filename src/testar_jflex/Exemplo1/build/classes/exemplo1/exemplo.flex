@@ -1,3 +1,4 @@
+package exemplo1;
 %%
 
 %line
@@ -29,7 +30,7 @@ DIGIT            = [0-9]
 NUMBER           = {DIGIT}+
 LETTER           = [A-Z]|[a-z]
 IDENTIFIER       = {LETTER}({LETTER}|{DIGIT})*
-LITERAL          = ({DIGIT}|{LETTER})+
+LITERAL          = [^"]({DIGIT}|{LETTER})+[^"]
 RELOP            = "=" | ">" | ">=" | "<" | "<=" | "<>"
 ADDOP            = "+" | "-"
 MULOP            = "*" | "/"
@@ -37,17 +38,38 @@ MULOP            = "*" | "/"
 %%
 
 <YYINITIAL> {
+	"if" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+	}
+	"else" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+	}
+	"then" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+	}
+	"while" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+	}
+	"do" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+	}
+	"read" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+	}
+	"write" {
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+	}
     "program" {
         System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
     }
     "declare" {
-	System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
     }
     "begin" {
         System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
     }
     "end" {
-	System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
+		System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
     }
     ";" {
         System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
@@ -89,7 +111,6 @@ MULOP            = "*" | "/"
 
 <<EOF>> {
 	System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+yytext()+"--");
-        return;
 }
 
 {NONNEWLINE_WHITE_SPACE_CHAR}+ { }

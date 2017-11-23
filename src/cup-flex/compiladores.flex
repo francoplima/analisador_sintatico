@@ -40,7 +40,7 @@ DIGIT            = [0-9]
 NUMBER           = {DIGIT}+
 LETTER           = [A-Z]|[a-z]
 IDENTIFIER       = {LETTER}({LETTER}|{DIGIT})*
-LITERAL          = ({DIGIT}|{LETTER})+
+LITERAL          = [^"]({DIGIT}|{LETTER})+[^"]
 RELOP            = "=" | ">" | ">=" | "<" | "<=" | "<>"
 ADDOP            = "+" | "-"
 MULOP            = "*" | "/"

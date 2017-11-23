@@ -2,8 +2,7 @@
 
 package principal;
 
-terminal PRG, DCL, BGN, END, P_VIRG, VIRG, INTEGER, A_PAREM, F_PAREM, RELOP, 
-ADDOP, LITERAL, MULOP, DO*, WHILE*, READ*, WRITE*, IF* ,THEN*,ELSE*,VARIABLE* ,ATR*;
+terminal PRG, DCL, BGN, END, P_VIRG, VIRG, INTEGER, A_PAREM, F_PAREM, RELOP, ADDOP, LITERAL, MULOP, DO, WHILE, READ, WRITE, IF, THEN, ELSE, VARIABLE, ATR;
 terminal String IDENTIFIER;
 
 nonterminal program, body, decl_list, decl, ident_list, tipo ,term ,factor, expression, 

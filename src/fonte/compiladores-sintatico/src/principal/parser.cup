@@ -1,9 +1,9 @@
 package principal;
 
-terminal PRG, DCL, BGN, END, P_VIRG, VIRG, INTEGER, A_PAREM, F_PAREM, RELOP, ADDOP, LITERAL, MULOP, DO, WHILE, READ, WRITE, IF ,THEN ,ELSE ,VARIABLE ,ATR;
+terminal PRG, DCL, BGN, END, P_VIRG, VIRG, INTEGER, A_PAREM, F_PAREM, RELOP, ADDOP, LITERAL, MULOP, DO, WHILE, READ, WRITE, IF, THEN, ELSE, ATR, CONSTANT, NUMBER;
 terminal String IDENTIFIER;
 
-nonterminal program, body, decllist, decl, identlist, tipo ,term ,factor, expression, simpleexpr, writable, condition, stmtsuffix, assignstmt, whilestmt, readstmt, ifstmt, stmt, stmtlist; 
+nonterminal program, body, decllist, decl, identlist, tipo ,term ,factor, expression, simpleexpr, writable, condition, stmtsuffix, assignstmt, whilestmt, readstmt, ifstmt, stmt, stmtlist, writestmt; 
 
 program    ::= PRG IDENTIFIER body;
 body 	   ::= DCL decllist BGN END;
@@ -12,13 +12,13 @@ decl 	   ::= tipo identlist;
 identlist  ::= IDENTIFIER | IDENTIFIER VIRG identlist;
 tipo	   ::= INTEGER;
 term 	   ::= factor | term MULOP factor;
-factor 	   ::= variable | constant | A_PAREM expression F_PAREM;
+factor 	   ::= IDENTIFIER | CONSTANT | A_PAREM expression F_PAREM;
 expression ::= simpleexpr | simpleexpr RELOP simpleexpr;
 simpleexpr ::= term | simpleexpr ADDOP term;
 writable   ::= simpleexpr | LITERAL;
 condition  ::= expression;
 stmtsuffix ::= WHILE condition;
-assignstmt ::= VARIABLE ATR simpleexpr;
+assignstmt ::= IDENTIFIER ATR simpleexpr;
 whilestmt  ::= DO stmtlist stmtsuffix;
 readstmt   ::= READ A_PAREM IDENTIFIER F_PAREM;
 writestmt  ::= WRITE A_PAREM writable F_PAREM;

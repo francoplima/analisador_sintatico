@@ -7,6 +7,7 @@ public class Main {
     }
     
     public static void leArquivo(String[] argv) {
+        argv = new String[] {"F:\\Users\\Guilherme\\Documents\\analisador_lexico\\docs\\arquivos_teste\\teste_1.txt"};
         if (argv.length == 0) {
             System.out.println("Usage : java Yylex <inputfile>");
         } else {
@@ -14,7 +15,7 @@ public class Main {
                 Yylex scanner = null;
                 try {
                     scanner = new Yylex(new java.io.FileReader(argv[i]));
-                    parser p = new parser(scanner);
+                    Parser p = new Parser(scanner);
                     p.parse();
 
                 } catch (java.io.FileNotFoundException e) {

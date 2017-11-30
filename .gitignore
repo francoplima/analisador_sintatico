@@ -1,1 +1,7 @@
 /src/fonte/compiladores-sintatico/nbproject/private/
+/src/fonte/compiladores-sintatico/.idea/
+/src/fonte/compiladores-sintatico/build/
+/src/fonte/compiladores-sintatico/compiladores-sintatico.iml
+/src/fonte/compiladores-sintatico/src/arquivos/compiladores.cup
+/src/testar_jflex/Exemplo1/nbproject/private/private.xml
+/src/fonte/compiladores-sintatico/nbproject/private/private.properties

@@ -1,0 +1,14 @@
+package as_exemplo1;
+
+terminal SEMI, PLUS, TIMES, LPAREN, RPAREN; 
+terminal Integer NUMBER;
+
+nonterminal expr_list, expr_part; 
+nonterminal Integer expr;
+
+precedence left PLUS; 
+precedence left TIMES;
+
+expr_list ::= expr_list expr_part | expr_part;
+expr_part ::= expr SEMI;
+expr ::= NUMBER | expr PLUS expr | expr TIMES expr | LPAREN expr RPAREN;

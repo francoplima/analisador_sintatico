@@ -23,8 +23,8 @@ public class TabelaSimbolo {
     public void imprimirTS(){
         System.out.println("Tabela de Símbolos");
         for(Token teste : tabelaSimbolos.values()){
-           System.out.print(teste.sym);
-           System.out.println(": " + teste.value);
+           System.out.print(teste.lexema);
+           System.out.println(": " + teste.tag);
            tabelaSimbolos.get(teste);
        }
     }

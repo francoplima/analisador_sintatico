@@ -1,0 +1,4 @@
+program asdfasdf 
+    declare
+        integer x, y
+    begin end
